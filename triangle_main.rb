@@ -6,4 +6,4 @@ input_number = gets.chomp.to_i
 
 triangle = Triangle.new(input_number)
 
-triangle.triangle_calculator
+puts triangle.triangle_calculator
