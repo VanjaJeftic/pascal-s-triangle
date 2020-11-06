@@ -1,30 +1,31 @@
 class Triangle
-  MAX_NUMBER = 40
+  MAX_NUMBER = 30
 
   def initialize(row)
     validate_number(row)
     @row = row
-    @pascal_triangle = [[1]]
+  end
+
+  def to_s
+    triangle_calculator.map { |item| item.join(' ').center(@row * 3) }
   end
 
   def triangle_calculator
+    start_triangle = [[1]]
     i = 0
     (i...@row).each do
-      @pascal_triangle << [1] + @pascal_triangle.last.each_cons(2).map { |first, second| first + second } + [1]
+      start_triangle << [1] + next_row(start_triangle) + [1]
     end
-    @pascal_triangle.map { |item| item.join(' ').center(@row * 3) }
+    start_triangle
   end
 
-  private
+  def next_row(triangle_array)
+    triangle_array.last.each_cons(2).map { |first, second| first + second }
+  end
 
   def validate_number(row)
-    return unless row > MAX_NUMBER
-
-    begin
-      raise ArgumentError,  'You have entered a number greater than 40!'
-    rescue StandardError => e
-      puts "An error of type #{e.class} happened, message is: #{e.message}"
-      exit
-    end
+    raise ArgumentError, 'You have entered a number greater than 30!' if row > MAX_NUMBER
   end
+
+  private :triangle_calculator, :next_row, :validate_number
 end
